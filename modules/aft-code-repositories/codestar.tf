@@ -19,6 +19,12 @@ resource "aws_codestarconnections_connection" "githubenterprise" {
   host_arn = aws_codestarconnections_host.githubenterprise[0].arn
 }
 
+resource "aws_codestarconnections_connection" "gitlab" {
+  count         = local.vcs.is_gitlab ? 1 : 0
+  name          = "ct-aft-gitlab-connection"
+  provider_type = "GitLab"
+}
+
 resource "aws_codestarconnections_host" "githubenterprise" {
   count             = local.vcs.is_github_enterprise ? 1 : 0
   name              = "github-enterprise-host"
